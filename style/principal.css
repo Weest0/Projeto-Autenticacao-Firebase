@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 body{
-    background-color: #352f44;
+    background-color: #e3e3e3;
+    font-family: 'Poppins', sans-serif;
 }
 .corpo{
     width: 400px;
@@ -12,7 +14,7 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #2a2438;
+    background-color: black;
     border-radius: 8px;
 }
 

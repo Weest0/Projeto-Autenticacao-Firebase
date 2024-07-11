@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-analytics.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 // Importações direto do firebase, assim como é usado na documentação
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -25,6 +25,7 @@ const botaoCadastrar = document.getElementById('cadastrar');
 const aviso = document.getElementById('messagem-aviso');
 const caracteresParaSenha = /^(?=.*[a-zA-Z])(?=.*[0-9])/;
 const caracteresParaEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const InfomacoesUsuario = document.getElementById('informacoes-usuario');
 
 function avisoMensagem(mensagem, cor){
     aviso.textContent = mensagem;
@@ -32,22 +33,31 @@ function avisoMensagem(mensagem, cor){
 };
 
 function verificarSeEmailJaExiste(){
-    const arrayUsuario = fetchSignInMethodsForEmail(auth, email.value); // Esse metodo do firebase so funciona se tiver await e async
+/*  Esse metodo do firebase só funciona se tiver await e async.
+    Como ainda não aprendi direito, vai ficar sem funcionar.
+    
+    const arrayUsuario = fetchSignInMethodsForEmail(auth, email.value);
     if(arrayUsuario.length > 0){ //Se o array não estiver vazio o email está registrado.
         return true; // Email já resgistrado.
     } else {
         return false;
-    } 
+    }  
+        */
+    
+    return true; //Só para funcionar temporariamente.
+
 }
+
+onAuthStateChanged(auth, function(user){ //exibir nome de usuario
+    if(user){
+        (user.displayName === null) ? InfomacoesUsuario.innerHTML = user.email : InfomacoesUsuario.innerHTML = user.displayName;
+    }
+});
 
 function verificarSeCredenciaisSaoValidas(){
     let senhaCaracteresValidos = caracteresParaSenha.test(senha.value);
     let emailCaracteresValidos = caracteresParaEmail.test(email.value);
-    if(senha.value.length >= 6 && senha.value.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos){
-        return true;
-    } else {
-        return false;
-    }
+    return(senha.value.length >= 6 && senha.value.length <= 10 && senhaCaracteresValidos && emailCaracteresValidos);
 }
 
 function validarCadastro(){
@@ -63,13 +73,14 @@ function validarCadastro(){
     } else {
         throw new Error('Não foi possivel criar o usuario. Verifique a se a senha e o email são validos.');
     }
-} 
+}
 
 function validarEntrada(){
     if(verificarSeCredenciaisSaoValidas()){
         if(verificarSeEmailJaExiste()){
             signInWithEmailAndPassword(auth, email.value, senha.value)
            console.log('usuario logado');
+           //window.location.href = 'home.html';
            email.value = '';
            senha.value = '';
         } else {
