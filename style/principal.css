@@ -1,0 +1,65 @@
+body{
+    background-color: #352f44;
+}
+.corpo{
+    width: 400px;
+    height: 350px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2a2438;
+    border-radius: 8px;
+}
+
+#email, #senha{
+    width: 300px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid white;
+    margin-bottom: 20px;
+    outline: none;
+    color: white;
+}
+
+label{
+    color: white;
+    margin-bottom: 10px;
+}
+
+.bloco-input{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.bloco-button{
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+.bloco-button input{
+    width: 100px;
+    height: 30px;
+    margin-left: 15px;
+    border: none;
+    color: black;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.titulo{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+
+#messagem-aviso{
+    margin-top: 15px;
+}
